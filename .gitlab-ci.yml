@@ -20,7 +20,7 @@ basket_build:
   extends: .build-push-kaniko
   variables:
     SERVICE: basket-api
-    SERVICE_DIR: src/basket-api
+    SERVICE_DIR: src/Catalog.API
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/       # exécute sur dev ou main
       changes:                                      # uniquement si ce dossier bouge
@@ -46,7 +46,7 @@ catalog_build:
   extends: .build-push-kaniko
   variables:
     SERVICE: catalog-api
-    SERVICE_DIR: src/catalog-api
+    SERVICE_DIR: src/Catalog.API
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
       changes: [src/catalog-api/**/*]
