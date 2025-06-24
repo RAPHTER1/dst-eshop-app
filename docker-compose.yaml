@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  catalog-api:
+    build:
+      context: .
+      dockerfile: Dockerfiles/Dockerfile.catalogapi
+    container_name: catalog-api
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__catalogdb=Host=postgres;Port=5432;Database=catalogdb;Username=postgres;Password=postgres
+    depends_on:
+      - postgres
+    networks:
+      - eshop-net
+
+  postgres:
+    image: ankane/pgvector
+    container_name: catalog-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: catalogdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - catalog_pgdata:/var/lib/postgresql/data
+    networks:
+      - eshop-net
+
+volumes:
+  catalog_pgdata:
+
+networks:
+  eshop-net:
+    driver: bridge

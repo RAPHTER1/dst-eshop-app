@@ -1,0 +1,70 @@
+# .gitlab-ci.yml  ── dépôt dst-eshop/eshop-app
+# utilise les templates Kaniko & MR stockés dans dst-eshop/ci-templates
+
+include:
+  - project: dst-eshop/ci-templates          # dépôt des templates communs
+    ref: main                                # branche/tag du dépôt templates
+    file:
+      - build-push-kaniko.yml                # template : build & push image
+      - bump-infra-mr.yml                    # template : MR vers eshop-infrastructure
+
+stages: [build, deploy]                      # affiché dans l’interface GitLab
+
+# ---------- variables globales ------------------------------------------------
+variables:
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA            # tag immuable pour l’image (7 car.)
+# ------------------------------------------------------------------------------
+
+# ===================== 1.  basket-api  ========================================
+basket_build:
+  extends: .build-push-kaniko
+  variables:
+    SERVICE: basket-api
+    SERVICE_DIR: src/basket-api
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/       # exécute sur dev ou main
+      changes:                                      # uniquement si ce dossier bouge
+        - src/basket-api/**/*
+
+basket_deploy:
+  extends: .bump-mr
+  needs: [basket_build]                             # récupère IMAGE_* du build
+  variables:
+    SERVICE: basket-api
+    OVERRIDE_PATH: |
+      $([[ "$CI_COMMIT_BRANCH" == "dev" ]] \
+        && echo values/basket-api/dev.yaml \
+        || echo values/basket-api/prod.yaml)
+    AUTO_MERGE: |
+      $([[ "$CI_COMMIT_BRANCH" == "dev" ]] && echo "true" || echo "false")
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/
+      changes: [src/basket-api/**/*]
+
+# ===================== 2.  catalog-api  =======================================
+catalog_build:
+  extends: .build-push-kaniko
+  variables:
+    SERVICE: catalog-api
+    SERVICE_DIR: src/catalog-api
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
+      changes: [src/catalog-api/**/*]
+
+catalog_deploy:
+  extends: .bump-mr
+  needs: [catalog_build]
+  variables:
+    SERVICE: catalog-api
+    OVERRIDE_PATH: |
+      $([[ "$CI_COMMIT_BRANCH" == "dev" ]] \
+        && echo argocd/values/catalog-api/dev.yaml \
+        || echo argocd/values/catalog-api/prod.yaml)
+    AUTO_MERGE: |
+      $([[ "$CI_COMMIT_BRANCH" == "dev" ]] && echo "true" || echo "false")
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
+      changes: [src/catalog-api/**/*]
+
+# -------------- Ajoute un bloc BUILD + DEPLOY similaire pour tout
+# -------------- autre service présent dans src/<service>/ …
