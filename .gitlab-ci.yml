@@ -40,39 +40,39 @@ basket_build:
     - when: never
 
 
-basket_deploy:
-  extends: .bump-mr
-  needs:
-    - job: basket_build                   # récupère l'artefact dotenv (IMAGE_*)
-      artifacts: true
-  variables:
-    SERVICE: basket-api
-    SERVICE_DIR: src/basket-api
-  rules:
-    # 1) Release tag => prod
-    - if: '$CI_COMMIT_TAG'
-      variables:
-        OVERRIDE_PATH: values/basket-api/prod.yaml
-        AUTO_MERGE: "false"
+# basket_deploy:
+#   extends: .bump-mr
+#   needs:
+#     - job: basket_build                   # récupère l'artefact dotenv (IMAGE_*)
+#       artifacts: true
+#   variables:
+#     SERVICE: basket-api
+#     SERVICE_DIR: src/basket-api
+#   rules:
+#     # 1) Release tag => prod
+#     - if: '$CI_COMMIT_TAG'
+#       variables:
+#         OVERRIDE_PATH: values/basket-api/prod.yaml
+#         AUTO_MERGE: "false"
 
-    # 2) Branche dev : déployer si le service a changé
-    - if: '$CI_COMMIT_BRANCH == "dev"'
-      changes:
-        - src/basket-api/**/*
-      variables:
-        OVERRIDE_PATH: values/basket-api/dev.yaml
-        AUTO_MERGE: "true"
+#     # 2) Branche dev : déployer si le service a changé
+#     - if: '$CI_COMMIT_BRANCH == "dev"'
+#       changes:
+#         - src/basket-api/**/*
+#       variables:
+#         OVERRIDE_PATH: values/basket-api/dev.yaml
+#         AUTO_MERGE: "true"
 
-    # 3) Branche main : déployer si le service a changé
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      changes:
-        - src/basket-api/**/*
-      variables:
-        OVERRIDE_PATH: values/basket-api/prod.yaml
-        AUTO_MERGE: "false"
+#     # 3) Branche main : déployer si le service a changé
+#     - if: '$CI_COMMIT_BRANCH == "main"'
+#       changes:
+#         - src/basket-api/**/*
+#       variables:
+#         OVERRIDE_PATH: values/basket-api/prod.yaml
+#         AUTO_MERGE: "false"
 
-    # 4) Sinon, ne pas exécuter
-    - when: never
+#     # 4) Sinon, ne pas exécuter
+#     - when: never
 
 # ===================== 2.  catalog-api  =======================================
 catalog_build:
