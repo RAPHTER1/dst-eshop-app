@@ -5,7 +5,7 @@ include:
   - project: dst-eshop/ci-templates          # dépôt des templates communs
     ref: main                                # branche/tag du dépôt templates
     file:
-      - /build-push-podman/build-push-podman.yml                # template : build & push image
+      - build-push-podman/build-push-podman.yml                # template : build & push image
       # - bump-infra-mr.yml                    # template : MR vers eshop-infrastructure
 
 stages: [build, deploy]                      # affiché dans l’interface GitLab
