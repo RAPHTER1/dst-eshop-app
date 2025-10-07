@@ -75,29 +75,29 @@ basket_build:
 #     - when: never
 
 # ===================== 2.  catalog-api  =======================================
-catalog_build:
-  extends: .build-push-kaniko
-  variables:
-    SERVICE: catalog-api
-    SERVICE_DIR: src/Catalog.API
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
-      changes: [src/catalog-api/**/*]
+# catalog_build:
+#   extends: .build-push-kaniko
+#   variables:
+#     SERVICE: catalog-api
+#     SERVICE_DIR: src/Catalog.API
+#   rules:
+#     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
+#       changes: [src/catalog-api/**/*]
 
-catalog_deploy:
-  extends: .bump-mr
-  needs: [catalog_build]
-  variables:
-    SERVICE: catalog-api
-    OVERRIDE_PATH: |
-      $([[ "$CI_COMMIT_BRANCH" == "dev" ]] \
-        && echo argocd/values/catalog-api/dev.yaml \
-        || echo argocd/values/catalog-api/prod.yaml)
-    AUTO_MERGE: |
-      $([[ "$CI_COMMIT_BRANCH" == "dev" ]] && echo "true" || echo "false")
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
-      changes: [src/catalog-api/**/*]
+# catalog_deploy:
+#   extends: .bump-mr
+#   needs: [catalog_build]
+#   variables:
+#     SERVICE: catalog-api
+#     OVERRIDE_PATH: |
+#       $([[ "$CI_COMMIT_BRANCH" == "dev" ]] \
+#         && echo argocd/values/catalog-api/dev.yaml \
+#         || echo argocd/values/catalog-api/prod.yaml)
+#     AUTO_MERGE: |
+#       $([[ "$CI_COMMIT_BRANCH" == "dev" ]] && echo "true" || echo "false")
+#   rules:
+#     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
+#       changes: [src/catalog-api/**/*]
 
-# -------------- Ajoute un bloc BUILD + DEPLOY similaire pour tout
-# -------------- autre service présent dans src/<service>/ …
+# # -------------- Ajoute un bloc BUILD + DEPLOY similaire pour tout
+# # -------------- autre service présent dans src/<service>/ …
