@@ -58,6 +58,7 @@ public static class Extensions
         JsonWebTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
         var identityUrl = configuration.GetRequiredValue("IdentityUrl");
+        var identityUrlExternal = configuration["IdentityUrlExternal"];
         var callBackUrl = configuration.GetRequiredValue("CallBackUrl");
         var sessionCookieLifetime = configuration.GetValue("SessionCookieLifetimeMinutes", 60);
 
@@ -84,11 +85,36 @@ public static class Extensions
             options.Scope.Add("profile");
             options.Scope.Add("orders");
             options.Scope.Add("basket");
+
+            if (!string.IsNullOrEmpty(identityUrlExternal))
+            {
+                options.Events ??= new OpenIdConnectEvents();
+                options.Events.OnRedirectToIdentityProvider = context =>
+                {
+                    context.ProtocolMessage.IssuerAddress = ReplaceBaseAddress(context.ProtocolMessage.IssuerAddress, identityUrl, identityUrlExternal);
+                    return Task.CompletedTask;
+                };
+                options.Events.OnRedirectToIdentityProviderForSignOut = context =>
+                {
+                    context.ProtocolMessage.IssuerAddress = ReplaceBaseAddress(context.ProtocolMessage.IssuerAddress, identityUrl, identityUrlExternal);
+                    return Task.CompletedTask;
+                };
+            }
         });
 
         // Blazor auth services
         services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
         services.AddCascadingAuthenticationState();
+
+        static string ReplaceBaseAddress(string? original, string internalBase, string externalBase)
+        {
+            if (string.IsNullOrEmpty(original) || !original.StartsWith(internalBase, StringComparison.OrdinalIgnoreCase))
+            {
+                return original ?? string.Empty;
+            }
+
+            return externalBase + original[internalBase.Length..];
+        }
     }
 
     private static void AddAIServices(this IHostApplicationBuilder builder)

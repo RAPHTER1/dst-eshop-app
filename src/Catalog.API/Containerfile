@@ -1,0 +1,40 @@
+# ===== STAGE 1: build & publish =====
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Fichiers centraux: feeds + gestion de versions + props/targets + SDK pin (si présent)
+COPY nuget.config ./
+COPY Directory.Packages.props ./
+COPY Directory.Build.props ./
+COPY Directory.Build.targets ./
+COPY global.json ./
+
+# Copier d'abord les .csproj pour un restore stable en cache
+COPY src/Catalog.API/Catalog.API.csproj                       Catalog.API/
+COPY src/EventBusRabbitMQ/EventBusRabbitMQ.csproj             EventBusRabbitMQ/
+COPY src/IntegrationEventLogEF/IntegrationEventLogEF.csproj   IntegrationEventLogEF/
+COPY src/eShop.ServiceDefaults/eShop.ServiceDefaults.csproj   eShop.ServiceDefaults/
+COPY src/EventBus/EventBus.csproj                             EventBus/
+
+# Restore (maintenant que les props/targets et csproj sont là)
+RUN dotnet restore Catalog.API/Catalog.API.csproj
+
+# Copier le code au bon endroit (même topologie que sur l'hôte)
+COPY src/Catalog.API/                 Catalog.API/
+COPY src/EventBusRabbitMQ/            EventBusRabbitMQ/
+COPY src/IntegrationEventLogEF/       IntegrationEventLogEF/
+COPY src/eShop.ServiceDefaults/       eShop.ServiceDefaults/
+COPY src/EventBus/                    EventBus/
+COPY src/Shared/                      Shared/
+
+# Publish
+RUN dotnet publish Catalog.API/Catalog.API.csproj \
+    -c Release -o /app/publish /p:UseAppHost=false
+
+# ===== STAGE 2: runtime =====
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+ENTRYPOINT ["dotnet","Catalog.API.dll"]

@@ -1,0 +1,45 @@
+# ===== STAGE 1: build & publish =====
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Fichiers centraux: feeds + gestion de versions + props/targets + SDK pin (si présent)
+COPY nuget.config ./
+COPY Directory.Packages.props ./
+COPY Directory.Build.props ./
+COPY Directory.Build.targets ./
+COPY global.json ./
+
+# Copier d'abord les .csproj pour un restore stable en cache
+COPY src/EventBus/EventBus.csproj EventBus/
+COPY src/EventBusRabbitMQ/EventBusRabbitMQ.csproj EventBusRabbitMQ/
+COPY src/WebApp/WebApp.csproj WebApp/
+COPY src/WebAppComponents/WebAppComponents.csproj WebAppComponents/
+COPY src/eShop.ServiceDefaults/eShop.ServiceDefaults.csproj eShop.ServiceDefaults/
+
+# Restore (maintenant que les props/targets et csproj sont là)
+RUN dotnet restore WebApp/WebApp.csproj
+
+# Copier le code au bon endroit (même topologie que sur l'hôte)
+COPY src/EventBus/ EventBus/
+COPY src/EventBusRabbitMQ/ EventBusRabbitMQ/
+COPY src/WebApp/ WebApp/
+COPY src/WebAppComponents/ WebAppComponents/
+COPY src/eShop.ServiceDefaults/ eShop.ServiceDefaults/
+COPY src/Basket.API/Proto/ Basket.API/Proto/
+COPY src/EventBus/ EventBus/
+COPY src/EventBusRabbitMQ/ EventBusRabbitMQ/
+COPY src/Shared/ Shared/
+COPY src/WebAppComponents/ WebAppComponents/
+COPY src/eShop.ServiceDefaults/ eShop.ServiceDefaults/
+
+# Publish
+RUN dotnet publish WebApp/WebApp.csproj \
+    -c Release -o /app/publish /p:UseAppHost=false
+
+# ===== STAGE 2: runtime =====
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+ENTRYPOINT ["dotnet","WebApp.dll"]

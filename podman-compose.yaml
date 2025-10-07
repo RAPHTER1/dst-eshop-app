@@ -40,11 +40,11 @@ services:
     container_name: catalog-api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__catalogdb: Host=postgres;Port=5432;Database=catalogdb;Username=postgres;Password=postgres
       UseCustomizationData: "true"
     ports:
-      - "5000:80"     # http://localhost:5000
+      - "5000:8080"     # http://localhost:5000
     depends_on: [postgres]
     networks: [eshop-net]
 
@@ -55,7 +55,7 @@ services:
     container_name: basket-api
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
+      ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__Redis: redis:6379
       EventBus__HostName: rabbitmq
       EventBus__UserName: guest

@@ -1,0 +1,1230 @@
+.
+├── Basket.API
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── Basket.API.csproj
+│   ├── Dockerfile
+│   ├── Extensions
+│   │   ├── Extensions.cs
+│   │   └── ServerCallContextIdentityExtensions.cs
+│   ├── GlobalUsings.cs
+│   ├── Grpc
+│   │   └── BasketService.cs
+│   ├── IntegrationEvents
+│   │   ├── EventHandling
+│   │   │   └── OrderStartedIntegrationEventHandler.cs
+│   │   └── Events
+│   │       └── OrderStartedIntegrationEvent.cs
+│   ├── Model
+│   │   ├── BasketItem.cs
+│   │   └── CustomerBasket.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Proto
+│   │   └── basket.proto
+│   ├── raf.txt
+│   └── Repositories
+│       ├── IBasketRepository.cs
+│       └── RedisBasketRepository.cs
+├── Catalog.API
+│   ├── Apis
+│   │   └── CatalogApi.cs
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── Catalog.API_v2.json
+│   ├── Catalog.API.csproj
+│   ├── Catalog.API.http
+│   ├── Catalog.API.json
+│   ├── CatalogOptions.cs
+│   ├── Dockerfile
+│   ├── Extensions
+│   │   ├── Extensions.cs
+│   │   └── HostEnvironmentExtensions.cs
+│   ├── GlobalUsings.cs
+│   ├── Infrastructure
+│   │   ├── CatalogContext.cs
+│   │   ├── CatalogContextSeed.cs
+│   │   ├── EntityConfigurations
+│   │   │   ├── CatalogBrandEntityTypeConfiguration.cs
+│   │   │   ├── CatalogItemEntityTypeConfiguration.cs
+│   │   │   └── CatalogTypeEntityTypeConfiguration.cs
+│   │   ├── Exceptions
+│   │   │   └── CatalogDomainException.cs
+│   │   └── Migrations
+│   │       ├── 20231009153249_Initial.cs
+│   │       ├── 20231009153249_Initial.Designer.cs
+│   │       ├── 20231018163051_RemoveHiLoAndIndexCatalogName.cs
+│   │       ├── 20231018163051_RemoveHiLoAndIndexCatalogName.Designer.cs
+│   │       ├── 20231026091140_Outbox.cs
+│   │       ├── 20231026091140_Outbox.Designer.cs
+│   │       └── CatalogContextModelSnapshot.cs
+│   ├── IntegrationEvents
+│   │   ├── CatalogIntegrationEventService.cs
+│   │   ├── EventHandling
+│   │   │   ├── AnyFutureIntegrationEventHandler.cs.txt
+│   │   │   ├── OrderStatusChangedToAwaitingValidationIntegrationEventHandler.cs
+│   │   │   └── OrderStatusChangedToPaidIntegrationEventHandler.cs
+│   │   ├── Events
+│   │   │   ├── ConfirmedOrderStockItem.cs
+│   │   │   ├── OrderStatusChangedToAwaitingValidationIntegrationEvent.cs
+│   │   │   ├── OrderStatusChangedToPaidIntegrationEvent.cs
+│   │   │   ├── OrderStockConfirmedIntegrationEvent.cs
+│   │   │   ├── OrderStockItem.cs
+│   │   │   ├── OrderStockRejectedIntegrationEvent.cs
+│   │   │   └── ProductPriceChangedIntegrationEvent.cs
+│   │   └── ICatalogIntegrationEventService.cs
+│   ├── Model
+│   │   ├── CatalogBrand.cs
+│   │   ├── CatalogItem.cs
+│   │   ├── CatalogServices.cs
+│   │   ├── CatalogType.cs
+│   │   ├── PaginatedItems.cs
+│   │   └── PaginationRequest.cs
+│   ├── Pics
+│   │   ├── 1.webp
+│   │   ├── 10.webp
+│   │   ├── 100.webp
+│   │   ├── 101.webp
+│   │   ├── 11.webp
+│   │   ├── 12.webp
+│   │   ├── 13.webp
+│   │   ├── 14.webp
+│   │   ├── 15.webp
+│   │   ├── 16.webp
+│   │   ├── 17.webp
+│   │   ├── 18.webp
+│   │   ├── 19.webp
+│   │   ├── 2.webp
+│   │   ├── 20.webp
+│   │   ├── 21.webp
+│   │   ├── 22.webp
+│   │   ├── 23.webp
+│   │   ├── 24.webp
+│   │   ├── 25.webp
+│   │   ├── 26.webp
+│   │   ├── 27.webp
+│   │   ├── 28.webp
+│   │   ├── 29.webp
+│   │   ├── 3.webp
+│   │   ├── 30.webp
+│   │   ├── 31.webp
+│   │   ├── 32.webp
+│   │   ├── 33.webp
+│   │   ├── 34.webp
+│   │   ├── 35.webp
+│   │   ├── 36.webp
+│   │   ├── 37.webp
+│   │   ├── 38.webp
+│   │   ├── 39.webp
+│   │   ├── 4.webp
+│   │   ├── 40.webp
+│   │   ├── 41.webp
+│   │   ├── 42.webp
+│   │   ├── 43.webp
+│   │   ├── 44.webp
+│   │   ├── 45.webp
+│   │   ├── 46.webp
+│   │   ├── 47.webp
+│   │   ├── 48.webp
+│   │   ├── 49.webp
+│   │   ├── 5.webp
+│   │   ├── 50.webp
+│   │   ├── 51.webp
+│   │   ├── 52.webp
+│   │   ├── 53.webp
+│   │   ├── 54.webp
+│   │   ├── 55.webp
+│   │   ├── 56.webp
+│   │   ├── 57.webp
+│   │   ├── 58.webp
+│   │   ├── 59.webp
+│   │   ├── 6.webp
+│   │   ├── 60.webp
+│   │   ├── 61.webp
+│   │   ├── 62.webp
+│   │   ├── 63.webp
+│   │   ├── 64.webp
+│   │   ├── 65.webp
+│   │   ├── 66.webp
+│   │   ├── 67.webp
+│   │   ├── 68.webp
+│   │   ├── 69.webp
+│   │   ├── 7.webp
+│   │   ├── 70.webp
+│   │   ├── 71.webp
+│   │   ├── 72.webp
+│   │   ├── 73.webp
+│   │   ├── 74.webp
+│   │   ├── 75.webp
+│   │   ├── 76.webp
+│   │   ├── 77.webp
+│   │   ├── 78.webp
+│   │   ├── 79.webp
+│   │   ├── 8.webp
+│   │   ├── 80.webp
+│   │   ├── 81.webp
+│   │   ├── 82.webp
+│   │   ├── 83.webp
+│   │   ├── 84.webp
+│   │   ├── 85.webp
+│   │   ├── 86.webp
+│   │   ├── 87.webp
+│   │   ├── 88.webp
+│   │   ├── 89.webp
+│   │   ├── 9.webp
+│   │   ├── 90.webp
+│   │   ├── 91.webp
+│   │   ├── 92.webp
+│   │   ├── 93.webp
+│   │   ├── 94.webp
+│   │   ├── 95.webp
+│   │   ├── 96.webp
+│   │   ├── 97.webp
+│   │   ├── 98.webp
+│   │   └── 99.webp
+│   ├── Program.cs
+│   ├── Program.Testing.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── raf.txt
+│   ├── Services
+│   │   ├── CatalogAI.cs
+│   │   └── ICatalogAI.cs
+│   └── Setup
+│       └── catalog.json
+├── ClientApp
+│   ├── Animations
+│   │   ├── Base
+│   │   │   ├── AnimationBase.cs
+│   │   │   └── EasingType.cs
+│   │   ├── FadeToAnimation.cs
+│   │   └── StoryBoard.cs
+│   ├── App.xaml
+│   ├── App.xaml.cs
+│   ├── AppActions.cs
+│   ├── AppShell.xaml
+│   ├── AppShell.xaml.cs
+│   ├── ClientApp.csproj
+│   ├── ClientApp.sln
+│   ├── Controls
+│   │   ├── AddBasketButton.xaml
+│   │   ├── AddBasketButton.xaml.cs
+│   │   ├── CustomTabbedPage.cs
+│   │   └── ToggleButton.cs
+│   ├── Converters
+│   │   ├── DoesNotHaveCountConverter.cs
+│   │   ├── DoubleConverter.cs
+│   │   ├── FirstValidationErrorConverter.cs
+│   │   ├── HasCountConverter.cs
+│   │   ├── ItemsToHeightConverter.cs
+│   │   ├── WebNavigatedEventArgsConverter.cs
+│   │   └── WebNavigatingEventArgsConverter.cs
+│   ├── Effects
+│   │   ├── EntryLineColorEffect.cs
+│   │   └── ThemeEffects.cs
+│   ├── Exceptions
+│   │   └── ServiceAuthenticationException.cs
+│   ├── Extensions
+│   │   ├── DictionaryExtensions.cs
+│   │   ├── ICommandExtensions.cs
+│   │   └── VisualElementExtensions.cs
+│   ├── GlobalSuppressions.cs
+│   ├── GlobalUsings.cs
+│   ├── Helpers
+│   │   ├── EasingHelper.cs
+│   │   └── UriHelper.cs
+│   ├── MauiProgram.cs
+│   ├── Messages
+│   │   └── ProductCountChangedMessage.cs
+│   ├── Models
+│   │   ├── Basket
+│   │   │   ├── BasketItem.cs
+│   │   │   └── CustomerBasket.cs
+│   │   ├── Catalog
+│   │   │   ├── CatalogBrand.cs
+│   │   │   ├── CatalogItem.cs
+│   │   │   ├── CatalogRoot.cs
+│   │   │   └── CatalogType.cs
+│   │   ├── Location
+│   │   │   ├── GeolocationError.cs
+│   │   │   ├── GeolocationException.cs
+│   │   │   ├── Location.cs
+│   │   │   └── Position.cs
+│   │   ├── Marketing
+│   │   │   ├── Campaign.cs
+│   │   │   ├── CampaignItem.cs
+│   │   │   └── CampaignRoot.cs
+│   │   ├── Navigation
+│   │   │   └── TabParameter.cs
+│   │   ├── Orders
+│   │   │   ├── CancelOrderCommand.cs
+│   │   │   ├── CardType.cs
+│   │   │   ├── Order.cs
+│   │   │   ├── OrderCheckout.cs
+│   │   │   └── OrderItem.cs
+│   │   ├── Permissions
+│   │   │   ├── Permission.cs
+│   │   │   └── PermissionStatus.cs
+│   │   ├── Token
+│   │   │   └── UserToken.cs
+│   │   └── User
+│   │       ├── Address.cs
+│   │       ├── LogoutParameter.cs
+│   │       ├── PaymentInfo.cs
+│   │       └── UserInfo.cs
+│   ├── Platforms
+│   │   ├── Android
+│   │   │   ├── AndroidManifest.xml
+│   │   │   ├── MainActivity.cs
+│   │   │   ├── MainApplication.cs
+│   │   │   ├── Resources
+│   │   │   │   ├── values
+│   │   │   │   │   └── colors.xml
+│   │   │   │   └── xml
+│   │   │   │       └── network_security_config.xml
+│   │   │   └── WebAuthenticationCallbackActivity.cs
+│   │   ├── iOS
+│   │   │   ├── AppDelegate.cs
+│   │   │   ├── Entitlements.plist
+│   │   │   ├── Info.plist
+│   │   │   └── Program.cs
+│   │   ├── MacCatalyst
+│   │   │   ├── AppDelegate.cs
+│   │   │   ├── Entitlements.Debug.plist
+│   │   │   ├── Entitlements.Release.plist
+│   │   │   ├── Info.plist
+│   │   │   └── Program.cs
+│   │   └── Windows
+│   │       ├── app.manifest
+│   │       ├── App.xaml
+│   │       ├── App.xaml.cs
+│   │       └── Package.appxmanifest
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Resources
+│   │   ├── AppIcon
+│   │   │   ├── appicon.svg
+│   │   │   └── appiconfg.svg
+│   │   ├── Fonts
+│   │   │   ├── FontAwesomeRegular.otf
+│   │   │   ├── FontAwesomeSolid.otf
+│   │   │   ├── Montserrat-Bold.ttf
+│   │   │   └── Montserrat-Regular.ttf
+│   │   ├── Images
+│   │   │   ├── arrow_left.svg
+│   │   │   ├── cart.svg
+│   │   │   ├── close.svg
+│   │   │   ├── fake_product_01.png
+│   │   │   ├── fake_product_02.png
+│   │   │   ├── fake_product_03.png
+│   │   │   ├── fake_product_04.png
+│   │   │   ├── fake_product_05.png
+│   │   │   ├── fake_product_06.png
+│   │   │   ├── filters.svg
+│   │   │   ├── header_home.png
+│   │   │   ├── header.png
+│   │   │   ├── logo_footer.svg
+│   │   │   ├── logo_header.svg
+│   │   │   ├── noimage.png
+│   │   │   ├── trash.svg
+│   │   │   └── user.svg
+│   │   ├── Raw
+│   │   │   └── AboutAssets.txt
+│   │   ├── Splash
+│   │   │   └── splash.svg
+│   │   └── Styles
+│   │       ├── Colors.xaml
+│   │       └── Styles.xaml
+│   ├── Services
+│   │   ├── AppEnvironment
+│   │   │   ├── AppEnvironmentService.cs
+│   │   │   └── IAppEnvironmentService.cs
+│   │   ├── Basket
+│   │   │   ├── BasketMockService.cs
+│   │   │   ├── BasketService.cs
+│   │   │   ├── IBasketService.cs
+│   │   │   └── Protos
+│   │   │       ├── Basket.cs
+│   │   │       ├── basket.proto
+│   │   │       └── BasketGrpc.cs
+│   │   ├── Catalog
+│   │   │   ├── CatalogMockService.cs
+│   │   │   ├── CatalogService.cs
+│   │   │   └── ICatalogService.cs
+│   │   ├── Common
+│   │   │   └── Common.cs
+│   │   ├── Dialog
+│   │   │   ├── DialogService.cs
+│   │   │   └── IDialogService.cs
+│   │   ├── EShopJsonSerializerContext.cs
+│   │   ├── FixUri
+│   │   │   ├── FixUriService.cs
+│   │   │   └── IFixUriService.cs
+│   │   ├── Identity
+│   │   │   ├── AuthorizeRequest.cs
+│   │   │   ├── IdentityMockService.cs
+│   │   │   ├── IdentityService.cs
+│   │   │   └── IIdentityService.cs
+│   │   ├── Location
+│   │   │   ├── ILocationService.cs
+│   │   │   └── LocationService.cs
+│   │   ├── Navigation
+│   │   │   ├── INavigationService.cs
+│   │   │   └── MauiNavigationService.cs
+│   │   ├── OpenUrl
+│   │   │   ├── IOpenUrlService.cs
+│   │   │   └── OpenUrlService.cs
+│   │   ├── Order
+│   │   │   ├── IOrderService.cs
+│   │   │   ├── OrderMockService.cs
+│   │   │   └── OrderService.cs
+│   │   ├── RequestProvider
+│   │   │   ├── HttpRequestExceptionEx.cs
+│   │   │   ├── IRequestProvider.cs
+│   │   │   └── RequestProvider.cs
+│   │   ├── Settings
+│   │   │   ├── ISettingsService.cs
+│   │   │   └── SettingsService.cs
+│   │   └── Theme
+│   │       ├── ITheme.cs
+│   │       └── Theme.shared.cs
+│   ├── Triggers
+│   │   └── BeginAnimation.cs
+│   ├── Validations
+│   │   ├── IsNotNullOrEmptyRule.cs
+│   │   ├── IValidationRule.cs
+│   │   ├── IValidity.cs
+│   │   └── ValidatableObject.cs
+│   ├── ViewModels
+│   │   ├── Base
+│   │   │   ├── IViewModelBase.cs
+│   │   │   └── ViewModelBase.cs
+│   │   ├── BasketViewModel.cs
+│   │   ├── CatalogItemViewModel.cs
+│   │   ├── CatalogViewModel.cs
+│   │   ├── CheckoutViewModel.cs
+│   │   ├── LoginViewModel.cs
+│   │   ├── MainViewModel.cs
+│   │   ├── MapViewModel.cs
+│   │   ├── ObservableCollectionEx.cs
+│   │   ├── OrderDetailViewModel.cs
+│   │   ├── ProfileViewModel.cs
+│   │   ├── SelectionViewModel.cs
+│   │   └── SettingsViewModel.cs
+│   └── Views
+│       ├── BadgeView.cs
+│       ├── BasketView.xaml
+│       ├── BasketView.xaml.cs
+│       ├── CatalogItemView.xaml
+│       ├── CatalogItemView.xaml.cs
+│       ├── CatalogView.xaml
+│       ├── CatalogView.xaml.cs
+│       ├── CheckoutView.xaml
+│       ├── CheckoutView.xaml.cs
+│       ├── ContentPageBase.cs
+│       ├── CustomNavigationView.xaml
+│       ├── CustomNavigationView.xaml.cs
+│       ├── FiltersView.xaml
+│       ├── FiltersView.xaml.cs
+│       ├── LoginView.xaml
+│       ├── LoginView.xaml.cs
+│       ├── MapView.xaml
+│       ├── MapView.xaml.cs
+│       ├── MauiAuthenticationBrowser.cs
+│       ├── OrderDetailView.xaml
+│       ├── OrderDetailView.xaml.cs
+│       ├── ProfileView.xaml
+│       ├── ProfileView.xaml.cs
+│       ├── SettingsView.xaml
+│       ├── SettingsView.xaml.cs
+│       └── Templates
+│           ├── BasketItemTemplate.xaml
+│           ├── BasketItemTemplate.xaml.cs
+│           ├── CampaignTemplate.xaml
+│           ├── CampaignTemplate.xaml.cs
+│           ├── OrderItemTemplate.xaml
+│           ├── OrderItemTemplate.xaml.cs
+│           ├── OrderTemplate.xaml
+│           ├── OrderTemplate.xaml.cs
+│           ├── ProductTemplate.xaml
+│           └── ProductTemplate.xaml.cs
+├── eShop.AppHost
+│   ├── appsettings.json
+│   ├── eShop.AppHost.csproj
+│   ├── Extensions.cs
+│   ├── Program.cs
+│   └── Properties
+│       └── launchSettings.json
+├── eShop.ServiceDefaults
+│   ├── AuthenticationExtensions.cs
+│   ├── ClaimsPrincipalExtensions.cs
+│   ├── ConfigurationExtensions.cs
+│   ├── eShop.ServiceDefaults.csproj
+│   ├── Extensions.cs
+│   ├── HttpClientExtensions.cs
+│   ├── OpenApi.Extensions.cs
+│   └── OpenApiOptionsExtensions.cs
+├── EventBus
+│   ├── Abstractions
+│   │   ├── EventBusSubscriptionInfo.cs
+│   │   ├── IEventBus.cs
+│   │   ├── IEventBusBuilder.cs
+│   │   └── IIntegrationEventHandler.cs
+│   ├── EventBus.csproj
+│   ├── Events
+│   │   └── IntegrationEvent.cs
+│   ├── Extensions
+│   │   ├── EventBusBuilderExtensions.cs
+│   │   └── GenericTypeExtensions.cs
+│   └── GlobalUsings.cs
+├── EventBusRabbitMQ
+│   ├── EventBusOptions.cs
+│   ├── EventBusRabbitMQ.csproj
+│   ├── GlobalUsings.cs
+│   ├── RabbitMqDependencyInjectionExtensions.cs
+│   ├── RabbitMQEventBus.cs
+│   └── RabbitMQTelemetry.cs
+├── HybridApp
+│   ├── App.xaml
+│   ├── App.xaml.cs
+│   ├── Components
+│   │   ├── _Imports.razor
+│   │   ├── Layout
+│   │   │   ├── FooterBar.razor
+│   │   │   ├── FooterBar.razor.css
+│   │   │   ├── HeaderBar.razor
+│   │   │   ├── HeaderBar.razor.css
+│   │   │   ├── MainLayout.razor
+│   │   │   └── MainLayout.razor.css
+│   │   ├── Pages
+│   │   │   ├── Catalog
+│   │   │   │   ├── Catalog.razor
+│   │   │   │   ├── Catalog.razor.css
+│   │   │   │   ├── CatalogSearch.razor
+│   │   │   │   └── CatalogSearch.razor.css
+│   │   │   └── Item
+│   │   │       ├── ItemPage.razor
+│   │   │       └── ItemPage.razor.css
+│   │   └── Routes.razor
+│   ├── HybridApp.csproj
+│   ├── MainPage.xaml
+│   ├── MainPage.xaml.cs
+│   ├── MauiProgram.cs
+│   ├── Platforms
+│   │   ├── Android
+│   │   │   ├── AndroidManifest.xml
+│   │   │   ├── MainActivity.cs
+│   │   │   ├── MainApplication.cs
+│   │   │   └── Resources
+│   │   │       ├── values
+│   │   │       │   └── colors.xml
+│   │   │       └── xml
+│   │   │           └── network_security_config.xml
+│   │   ├── iOS
+│   │   │   ├── AppDelegate.cs
+│   │   │   ├── Info.plist
+│   │   │   └── Program.cs
+│   │   ├── MacCatalyst
+│   │   │   ├── AppDelegate.cs
+│   │   │   ├── Entitlements.Debug.plist
+│   │   │   ├── Entitlements.Release.plist
+│   │   │   ├── Info.plist
+│   │   │   └── Program.cs
+│   │   ├── Tizen
+│   │   │   ├── Main.cs
+│   │   │   └── tizen-manifest.xml
+│   │   └── Windows
+│   │       ├── app.manifest
+│   │       ├── App.xaml
+│   │       ├── App.xaml.cs
+│   │       └── Package.appxmanifest
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Resources
+│   │   ├── AppIcon
+│   │   │   ├── appicon.svg
+│   │   │   └── appiconfg.svg
+│   │   ├── Fonts
+│   │   │   └── OpenSans-Regular.ttf
+│   │   ├── Images
+│   │   │   └── dotnet_bot.svg
+│   │   ├── Raw
+│   │   │   └── AboutAssets.txt
+│   │   └── Splash
+│   │       └── splash.svg
+│   ├── Services
+│   │   ├── CatalogService.cs
+│   │   └── ProductImageUrlProvider.cs
+│   └── wwwroot
+│       ├── chatbot.png
+│       ├── css
+│       │   ├── app.css
+│       │   └── normalize.css
+│       ├── favicon.png
+│       ├── fonts
+│       │   ├── plus-jakarta-sans-v8-latin-200.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-200italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-300.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-300italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-500.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-500italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-600.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-600italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-700.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-700italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-800.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-800italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-italic.woff2
+│       │   └── plus-jakarta-sans-v8-latin-regular.woff2
+│       ├── icons
+│       │   ├── arrow-left.svg
+│       │   ├── cart.svg
+│       │   ├── close.svg
+│       │   ├── filters.svg
+│       │   ├── trash.svg
+│       │   └── user.svg
+│       ├── images
+│       │   ├── apple-pay.svg
+│       │   ├── google-pay.svg
+│       │   ├── header-home.webp
+│       │   ├── header.webp
+│       │   ├── logo-footer.svg
+│       │   ├── logo-header.svg
+│       │   ├── mastercard.png
+│       │   ├── paypal.png
+│       │   └── visa.png
+│       └── index.html
+├── Identity.API
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── bundleconfig.json
+│   ├── Configuration
+│   │   └── Config.cs
+│   ├── Data
+│   │   ├── ApplicationDbContext.cs
+│   │   └── Migrations
+│   │       ├── 20230925223402_InitialMigration.cs
+│   │       ├── 20230925223402_InitialMigration.Designer.cs
+│   │       └── ApplicationDbContextModelSnapshot.cs
+│   ├── GlobalUsings.cs
+│   ├── Identity.API.csproj
+│   ├── libman.json
+│   ├── Models
+│   │   ├── AccountViewModels
+│   │   │   ├── ForgotPasswordViewModel.cs
+│   │   │   ├── LoggedOutViewModel.cs
+│   │   │   ├── LoginViewModel.cs
+│   │   │   ├── LogoutViewModel.cs
+│   │   │   ├── RedirectViewModel.cs
+│   │   │   ├── RegisterViewModel.cs
+│   │   │   ├── ResetPasswordViewModel.cs
+│   │   │   ├── SendCodeViewModel.cs
+│   │   │   └── VerifyCodeViewModel.cs
+│   │   ├── ApplicationUser.cs
+│   │   ├── ConsentViewModels
+│   │   │   ├── ConsentInputModel.cs
+│   │   │   ├── ConsentOptions.cs
+│   │   │   ├── ConsentViewModel.cs
+│   │   │   ├── ProcessConsentResult.cs
+│   │   │   └── ScopeViewModel.cs
+│   │   ├── ErrorViewModel.cs
+│   │   └── ManageViewModels
+│   │       ├── AddPhoneNumberViewModel.cs
+│   │       ├── ChangePasswordViewModel.cs
+│   │       ├── ConfigureTwoFactorViewModel.cs
+│   │       ├── FactorViewModel.cs
+│   │       ├── IndexViewModel.cs
+│   │       ├── SetPasswordViewModel.cs
+│   │       └── VerifyPhoneNumberViewModel.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Quickstart
+│   │   ├── Account
+│   │   │   ├── AccountController.cs
+│   │   │   ├── AccountOptions.cs
+│   │   │   ├── ExternalController.cs
+│   │   │   ├── ExternalProvider.cs
+│   │   │   ├── LoggedOutViewModel.cs
+│   │   │   ├── LoginInputModel.cs
+│   │   │   ├── LoginViewModel.cs
+│   │   │   ├── LogoutInputModel.cs
+│   │   │   ├── LogoutViewModel.cs
+│   │   │   └── RedirectViewModel.cs
+│   │   ├── Consent
+│   │   │   ├── ConsentController.cs
+│   │   │   ├── ConsentInputModel.cs
+│   │   │   ├── ConsentOptions.cs
+│   │   │   ├── ConsentViewModel.cs
+│   │   │   ├── ProcessConsentResult.cs
+│   │   │   └── ScopeViewModel.cs
+│   │   ├── Device
+│   │   │   ├── DeviceAuthorizationInputModel.cs
+│   │   │   ├── DeviceAuthorizationViewModel.cs
+│   │   │   └── DeviceController.cs
+│   │   ├── Diagnostics
+│   │   │   ├── DiagnosticsController.cs
+│   │   │   └── DiagnosticsViewModel.cs
+│   │   ├── Extensions.cs
+│   │   ├── Grants
+│   │   │   ├── GrantsController.cs
+│   │   │   └── GrantsViewModel.cs
+│   │   ├── Home
+│   │   │   ├── ErrorViewModel.cs
+│   │   │   └── HomeController.cs
+│   │   └── SecurityHeadersAttribute.cs
+│   ├── Services
+│   │   ├── EFLoginService.cs
+│   │   ├── ILoginService.cs
+│   │   ├── IRedirectService.cs
+│   │   ├── ProfileService.cs
+│   │   └── RedirectService.cs
+│   ├── tempkey.jwk
+│   ├── UsersSeed.cs
+│   ├── Views
+│   │   ├── _ViewImports.cshtml
+│   │   ├── _ViewStart.cshtml
+│   │   ├── Account
+│   │   │   ├── AccessDenied.cshtml
+│   │   │   ├── LoggedOut.cshtml
+│   │   │   ├── Login.cshtml
+│   │   │   └── Logout.cshtml
+│   │   ├── Consent
+│   │   │   └── Index.cshtml
+│   │   ├── Device
+│   │   │   ├── Success.cshtml
+│   │   │   ├── UserCodeCapture.cshtml
+│   │   │   └── UserCodeConfirmation.cshtml
+│   │   ├── Diagnostics
+│   │   │   └── Index.cshtml
+│   │   ├── Grants
+│   │   │   └── Index.cshtml
+│   │   ├── Home
+│   │   │   └── Index.cshtml
+│   │   └── Shared
+│   │       ├── _Layout.cshtml
+│   │       ├── _ScopeListItem.cshtml
+│   │       ├── _ValidationSummary.cshtml
+│   │       ├── Error.cshtml
+│   │       └── Redirect.cshtml
+│   └── wwwroot
+│       ├── _references.js
+│       ├── css
+│       │   └── site.css
+│       ├── favicon.ico
+│       ├── fonts
+│       │   ├── Montserrat-Bold.eot
+│       │   ├── Montserrat-Bold.svg
+│       │   ├── Montserrat-Bold.ttf
+│       │   ├── Montserrat-Bold.woff
+│       │   ├── Montserrat-Bold.woff2
+│       │   ├── Montserrat-Regular.eot
+│       │   ├── Montserrat-Regular.svg
+│       │   ├── Montserrat-Regular.ttf
+│       │   ├── Montserrat-Regular.woff
+│       │   ├── Montserrat-Regular.woff2
+│       │   ├── Oswald-Bold.eot
+│       │   ├── Oswald-Bold.svg
+│       │   ├── Oswald-Bold.ttf
+│       │   ├── Oswald-Bold.woff
+│       │   ├── Oswald-Bold.woff2
+│       │   ├── Oswald-ExtraLight.eot
+│       │   ├── Oswald-ExtraLight.svg
+│       │   ├── Oswald-ExtraLight.ttf
+│       │   ├── Oswald-ExtraLight.woff
+│       │   ├── Oswald-ExtraLight.woff2
+│       │   ├── Oswald-Light.eot
+│       │   ├── Oswald-Light.svg
+│       │   ├── Oswald-Light.ttf
+│       │   ├── Oswald-Light.woff
+│       │   ├── Oswald-Light.woff2
+│       │   ├── Oswald-Medium.eot
+│       │   ├── Oswald-Medium.svg
+│       │   ├── Oswald-Medium.ttf
+│       │   ├── Oswald-Medium.woff
+│       │   ├── Oswald-Medium.woff2
+│       │   ├── Oswald-Regular.eot
+│       │   ├── Oswald-Regular.svg
+│       │   ├── Oswald-Regular.ttf
+│       │   ├── Oswald-Regular.woff
+│       │   ├── Oswald-Regular.woff2
+│       │   ├── Oswald-SemiBold.eot
+│       │   ├── Oswald-SemiBold.svg
+│       │   ├── Oswald-SemiBold.ttf
+│       │   ├── Oswald-SemiBold.woff
+│       │   ├── Oswald-SemiBold.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-200.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-200italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-300.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-300italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-500.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-500italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-600.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-600italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-700.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-700italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-800.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-800italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-italic.woff2
+│       │   └── plus-jakarta-sans-v8-latin-regular.woff2
+│       ├── icon.jpg
+│       ├── icon.png
+│       ├── images
+│       │   ├── arrow-down.png
+│       │   ├── arrow-right.svg
+│       │   ├── banner.png
+│       │   ├── banner1.svg
+│       │   ├── banner2.svg
+│       │   ├── banner3.svg
+│       │   ├── banner4.svg
+│       │   ├── brand_dark.PNG
+│       │   ├── brand.PNG
+│       │   ├── cart.png
+│       │   ├── check.svg
+│       │   ├── header.jpg
+│       │   ├── logo_color.svg
+│       │   ├── logo-footer.svg
+│       │   ├── logo-header.svg
+│       │   ├── logo.svg
+│       │   ├── logout.PNG
+│       │   ├── main_banner_text.png
+│       │   ├── main_banner_text.svg
+│       │   ├── main_banner.png
+│       │   ├── main_footer_text.PNG
+│       │   ├── my_orders.PNG
+│       │   └── refresh.svg
+│       └── js
+│           ├── signin-redirect.js
+│           ├── signout-redirect.js
+│           ├── site.js
+│           └── site.min.js
+├── IntegrationEventLogEF
+│   ├── EventStateEnum.cs
+│   ├── GlobalUsings.cs
+│   ├── IntegrationEventLogEF.csproj
+│   ├── IntegrationEventLogEntry.cs
+│   ├── IntegrationLogExtensions.cs
+│   ├── Services
+│   │   ├── IIntegrationEventLogService.cs
+│   │   └── IntegrationEventLogService.cs
+│   └── Utilities
+│       └── ResilientTransaction.cs
+├── Mobile.Bff.Shopping
+│   ├── appsettings.json
+│   ├── appsettings.localhost.json
+│   ├── Extensions
+│   │   └── Extensions.cs
+│   ├── GlobalUsings.cs
+│   ├── Mobile.Bff.Shopping.csproj
+│   ├── Program.cs
+│   └── Properties
+│       └── launchSettings.json
+├── Ordering.API
+│   ├── Apis
+│   │   ├── OrdersApi.cs
+│   │   └── OrderServices.cs
+│   ├── Application
+│   │   ├── Behaviors
+│   │   │   ├── LoggingBehavior.cs
+│   │   │   ├── TransactionBehavior.cs
+│   │   │   └── ValidatorBehavior.cs
+│   │   ├── Commands
+│   │   │   ├── CancelOrderCommand.cs
+│   │   │   ├── CancelOrderCommandHandler.cs
+│   │   │   ├── CreateOrderCommand.cs
+│   │   │   ├── CreateOrderCommandHandler.cs
+│   │   │   ├── CreateOrderDraftCommand.cs
+│   │   │   ├── CreateOrderDraftCommandHandler.cs
+│   │   │   ├── IdentifiedCommand.cs
+│   │   │   ├── IdentifiedCommandHandler.cs
+│   │   │   ├── SetAwaitingValidationOrderStatusCommand.cs
+│   │   │   ├── SetAwaitingValidationOrderStatusCommandHandler.cs
+│   │   │   ├── SetPaidOrderStatusCommand.cs
+│   │   │   ├── SetPaidOrderStatusCommandHandler.cs
+│   │   │   ├── SetStockConfirmedOrderStatusCommand.cs
+│   │   │   ├── SetStockConfirmedOrderStatusCommandHandler.cs
+│   │   │   ├── SetStockRejectedOrderStatusCommand.cs
+│   │   │   ├── SetStockRejectedOrderStatusCommandHandler.cs
+│   │   │   ├── ShipOrderCommand.cs
+│   │   │   └── ShipOrderCommandHandler.cs
+│   │   ├── DomainEventHandlers
+│   │   │   ├── OrderCancelledDomainEventHandler.cs
+│   │   │   ├── OrderShippedDomainEventHandler.cs
+│   │   │   ├── OrderStatusChangedToAwaitingValidationDomainEventHandler.cs
+│   │   │   ├── OrderStatusChangedToPaidDomainEventHandler.cs
+│   │   │   ├── OrderStatusChangedToStockConfirmedDomainEventHandler.cs
+│   │   │   ├── UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler.cs
+│   │   │   └── ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler.cs
+│   │   ├── IntegrationEvents
+│   │   │   ├── EventHandling
+│   │   │   │   ├── GracePeriodConfirmedIntegrationEventHandler.cs
+│   │   │   │   ├── OrderPaymentFailedIntegrationEventHandler.cs
+│   │   │   │   ├── OrderPaymentSucceededIntegrationEventHandler.cs
+│   │   │   │   ├── OrderStockConfirmedIntegrationEventHandler.cs
+│   │   │   │   └── OrderStockRejectedIntegrationEventHandler.cs
+│   │   │   ├── Events
+│   │   │   │   ├── GracePeriodConfirmedIntegrationEvent.cs
+│   │   │   │   ├── OrderPaymentFailedIntegrationEvent .cs
+│   │   │   │   ├── OrderPaymentSucceededIntegrationEvent.cs
+│   │   │   │   ├── OrderStartedIntegrationEvent.cs
+│   │   │   │   ├── OrderStatusChangedToAwaitingValidationIntegrationEvent.cs
+│   │   │   │   ├── OrderStatusChangedToCancelledIntegrationEvent.cs
+│   │   │   │   ├── OrderStatusChangedToPaidIntegrationEvent.cs
+│   │   │   │   ├── OrderStatusChangedToShippedIntegrationEvent.cs
+│   │   │   │   ├── OrderStatusChangedToStockConfirmedIntegrationEvent.cs
+│   │   │   │   ├── OrderStatusChangedTosubmittedIntegrationEvent.cs
+│   │   │   │   ├── OrderStockConfirmedIntegrationEvent.cs
+│   │   │   │   └── OrderStockRejectedIntegrationEvent.cs
+│   │   │   ├── IOrderingIntegrationEventService.cs
+│   │   │   └── OrderingIntegrationEventService.cs
+│   │   ├── Models
+│   │   │   ├── BasketItem.cs
+│   │   │   └── CustomerBasket.cs
+│   │   ├── Queries
+│   │   │   ├── IOrderQueries.cs
+│   │   │   ├── OrderQueries.cs
+│   │   │   └── OrderViewModel.cs
+│   │   └── Validations
+│   │       ├── CancelOrderCommandValidator.cs
+│   │       ├── CreateOrderCommandValidator.cs
+│   │       ├── IdentifiedCommandValidator.cs
+│   │       └── ShipOrderCommandValidator.cs
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── Extensions
+│   │   ├── BasketItemExtensions.cs
+│   │   ├── Extensions.cs
+│   │   ├── LinqSelectExtensions.cs
+│   │   └── OrderingApiTrace.cs
+│   ├── GlobalUsings.cs
+│   ├── Infrastructure
+│   │   ├── OrderingContextSeed.cs
+│   │   └── Services
+│   │       ├── IdentityService.cs
+│   │       └── IIdentityService.cs
+│   ├── Ordering.API.csproj
+│   ├── Program.cs
+│   ├── Program.Testing.cs
+│   └── Properties
+│       └── launchSettings.json
+├── Ordering.Domain
+│   ├── AggregatesModel
+│   │   ├── BuyerAggregate
+│   │   │   ├── Buyer.cs
+│   │   │   ├── CardType.cs
+│   │   │   ├── IBuyerRepository.cs
+│   │   │   └── PaymentMethod.cs
+│   │   └── OrderAggregate
+│   │       ├── Address.cs
+│   │       ├── IOrderRepository.cs
+│   │       ├── Order.cs
+│   │       ├── OrderItem.cs
+│   │       └── OrderStatus.cs
+│   ├── Events
+│   │   ├── BuyerPaymentMethodVerifiedDomainEvent.cs
+│   │   ├── OrderCancelledDomainEvent.cs
+│   │   ├── OrderShippedDomainEvent.cs
+│   │   ├── OrderStartedDomainEvent.cs
+│   │   ├── OrderStatusChangedToAwaitingValidationDomainEvent.cs
+│   │   ├── OrderStatusChangedToPaidDomainEvent.cs
+│   │   └── OrderStatusChangedToStockConfirmedDomainEvent.cs
+│   ├── Exceptions
+│   │   └── OrderingDomainException.cs
+│   ├── GlobalUsings.cs
+│   ├── Ordering.Domain.csproj
+│   └── SeedWork
+│       ├── Entity.cs
+│       ├── IAggregateRoot.cs
+│       ├── IRepository.cs
+│       ├── IUnitOfWork.cs
+│       └── ValueObject.cs
+├── Ordering.Infrastructure
+│   ├── EntityConfigurations
+│   │   ├── BuyerEntityTypeConfiguration.cs
+│   │   ├── CardTypeEntityTypeConfiguration.cs
+│   │   ├── ClientRequestEntityTypeConfiguration.cs
+│   │   ├── OrderEntityTypeConfiguration.cs
+│   │   ├── OrderItemEntityTypeConfiguration.cs
+│   │   └── PaymentMethodEntityTypeConfiguration.cs
+│   ├── GlobalUsings.cs
+│   ├── Idempotency
+│   │   ├── ClientRequest.cs
+│   │   ├── IRequestManager.cs
+│   │   └── RequestManager.cs
+│   ├── MediatorExtension.cs
+│   ├── Migrations
+│   │   ├── 20230925222426_Initial.cs
+│   │   ├── 20230925222426_Initial.Designer.cs
+│   │   ├── 20231021004633_FixOrderitemseqSchema.cs
+│   │   ├── 20231021004633_FixOrderitemseqSchema.Designer.cs
+│   │   ├── 20231026091055_Outbox.cs
+│   │   ├── 20231026091055_Outbox.Designer.cs
+│   │   ├── 20240106121712_UseEnumForOrderStatus.cs
+│   │   ├── 20240106121712_UseEnumForOrderStatus.Designer.cs
+│   │   └── OrderingContextModelSnapshot.cs
+│   ├── Ordering.Infrastructure.csproj
+│   ├── OrderingContext.cs
+│   └── Repositories
+│       ├── BuyerRepository.cs
+│       └── OrderRepository.cs
+├── OrderProcessor
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── BackgroundTaskOptions.cs
+│   ├── Events
+│   │   └── GracePeriodConfirmedIntegrationEvent.cs
+│   ├── Extensions
+│   │   └── Extensions.cs
+│   ├── GlobalUsings.cs
+│   ├── OrderProcessor.csproj
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   └── Services
+│       └── GracePeriodManagerService.cs
+├── PaymentProcessor
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── GlobalUsings.cs
+│   ├── IntegrationEvents
+│   │   ├── EventHandling
+│   │   │   └── OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs
+│   │   └── Events
+│   │       ├── OrderPaymentFailedIntegrationEvent.cs
+│   │       ├── OrderPaymentSucceededIntegrationEvent.cs
+│   │       └── OrderStatusChangedToStockConfirmedIntegrationEvent.cs
+│   ├── PaymentOptions.cs
+│   ├── PaymentProcessor.csproj
+│   ├── Program.cs
+│   └── Properties
+│       └── launchSettings.json
+├── Shared
+│   ├── ActivityExtensions.cs
+│   └── MigrateDbContextExtensions.cs
+├── tree.txt
+├── WebApp
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── Components
+│   │   ├── _Imports.razor
+│   │   ├── App.razor
+│   │   ├── Chatbot
+│   │   │   ├── Chatbot.razor
+│   │   │   ├── Chatbot.razor.css
+│   │   │   ├── Chatbot.razor.js
+│   │   │   ├── ChatState.cs
+│   │   │   ├── MessageProcessor.cs
+│   │   │   ├── ShowChatbotButton.razor
+│   │   │   └── ShowChatbotButton.razor.css
+│   │   ├── Layout
+│   │   │   ├── CartMenu.razor
+│   │   │   ├── CartMenu.razor.css
+│   │   │   ├── FooterBar.razor
+│   │   │   ├── FooterBar.razor.css
+│   │   │   ├── HeaderBar.razor
+│   │   │   ├── HeaderBar.razor.css
+│   │   │   ├── MainLayout.razor
+│   │   │   ├── MainLayout.razor.css
+│   │   │   ├── UserMenu.razor
+│   │   │   └── UserMenu.razor.css
+│   │   ├── Pages
+│   │   │   ├── Cart
+│   │   │   │   ├── CartPage.razor
+│   │   │   │   └── CartPage.razor.css
+│   │   │   ├── Catalog
+│   │   │   │   ├── Catalog.razor
+│   │   │   │   └── Catalog.razor.css
+│   │   │   ├── Checkout
+│   │   │   │   ├── Checkout.razor
+│   │   │   │   └── Checkout.razor.css
+│   │   │   ├── Item
+│   │   │   │   ├── ItemPage.razor
+│   │   │   │   └── ItemPage.razor.css
+│   │   │   └── User
+│   │   │       ├── LogIn.razor
+│   │   │       ├── LogOut.razor
+│   │   │       ├── Orders.razor
+│   │   │       ├── Orders.razor.css
+│   │   │       └── OrdersRefreshOnStatusChange.razor
+│   │   └── Routes.razor
+│   ├── Extensions
+│   │   └── Extensions.cs
+│   ├── GlobalUsings.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Services
+│   │   ├── BasketCheckoutInfo.cs
+│   │   ├── BasketItem.cs
+│   │   ├── BasketService.cs
+│   │   ├── BasketState.cs
+│   │   ├── IBasketState.cs
+│   │   ├── LogOutService.cs
+│   │   ├── OrderingService.cs
+│   │   ├── OrderStatus
+│   │   │   ├── IntegrationEvents
+│   │   │   │   ├── EventHandling
+│   │   │   │   │   ├── OrderStatusChangedToAwaitingValidationIntegrationEventHandler.cs
+│   │   │   │   │   ├── OrderStatusChangedToCancelledIntegrationEventHandler.cs
+│   │   │   │   │   ├── OrderStatusChangedToPaidIntegrationEventHandler.cs
+│   │   │   │   │   ├── OrderStatusChangedToShippedIntegrationEventHandler.cs
+│   │   │   │   │   ├── OrderStatusChangedToStockConfirmedIntegrationEventHandler.cs
+│   │   │   │   │   └── OrderStatusChangedToSubmittedIntegrationEventHandler.cs
+│   │   │   │   └── Events
+│   │   │   │       ├── OrderStatusChangedToAwaitingValidationIntegrationEvent.cs
+│   │   │   │       ├── OrderStatusChangedToCancelledIntegrationEvent.cs
+│   │   │   │       ├── OrderStatusChangedToPaidIntegrationEvent.cs
+│   │   │   │       ├── OrderStatusChangedToShippedIntegrationEvent.cs
+│   │   │   │       ├── OrderStatusChangedToStockConfirmedIntegrationEvent.cs
+│   │   │   │       └── OrderStatusChangedToSubmittedIntegrationEvent.cs
+│   │   │   └── OrderStatusNotificationService.cs
+│   │   └── ProductImageUrlProvider.cs
+│   ├── WebApp.csproj
+│   └── wwwroot
+│       ├── chat.png
+│       ├── chatbot.png
+│       ├── css
+│       │   ├── app.css
+│       │   └── normalize.css
+│       ├── fonts
+│       │   ├── open-sans-v36-latin-300.woff2
+│       │   ├── open-sans-v36-latin-300italic.woff2
+│       │   ├── open-sans-v36-latin-500.woff2
+│       │   ├── open-sans-v36-latin-500italic.woff2
+│       │   ├── open-sans-v36-latin-600.woff2
+│       │   ├── open-sans-v36-latin-600italic.woff2
+│       │   ├── open-sans-v36-latin-700.woff2
+│       │   ├── open-sans-v36-latin-700italic.woff2
+│       │   ├── open-sans-v36-latin-800.woff2
+│       │   ├── open-sans-v36-latin-800italic.woff2
+│       │   ├── open-sans-v36-latin-italic.woff2
+│       │   ├── open-sans-v36-latin-regular.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-200.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-200italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-300.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-300italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-500.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-500italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-600.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-600italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-700.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-700italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-800.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-800italic.woff2
+│       │   ├── plus-jakarta-sans-v8-latin-italic.woff2
+│       │   └── plus-jakarta-sans-v8-latin-regular.woff2
+│       ├── icons
+│       │   ├── arrow-left.svg
+│       │   ├── cart.svg
+│       │   ├── close.svg
+│       │   ├── filters.svg
+│       │   ├── trash.svg
+│       │   └── user.svg
+│       └── images
+│           ├── favicon.png
+│           ├── header-home.webp
+│           ├── header.webp
+│           ├── logo-footer.svg
+│           └── logo-header.svg
+├── WebAppComponents
+│   ├── _Imports.razor
+│   ├── Catalog
+│   │   ├── CatalogItem.cs
+│   │   ├── CatalogListItem.razor
+│   │   ├── CatalogListItem.razor.css
+│   │   ├── CatalogSearch.razor
+│   │   └── CatalogSearch.razor.css
+│   ├── Item
+│   │   └── ItemHelper.cs
+│   ├── Services
+│   │   ├── CatalogService.cs
+│   │   ├── ICatalogService.cs
+│   │   └── IProductImageUrlProvider.cs
+│   └── WebAppComponents.csproj
+├── WebhookClient
+│   ├── appsettings.Development.json
+│   ├── appsettings.json
+│   ├── Components
+│   │   ├── _Imports.razor
+│   │   ├── App.razor
+│   │   ├── App.razor.css
+│   │   ├── Layout
+│   │   │   ├── MainLayout.razor
+│   │   │   ├── MainLayout.razor.css
+│   │   │   ├── UserMenu.razor
+│   │   │   └── UserMenu.razor.css
+│   │   ├── Pages
+│   │   │   ├── AddWebhook.razor
+│   │   │   ├── Error.razor
+│   │   │   ├── Home
+│   │   │   │   ├── Home.razor
+│   │   │   │   ├── Home.razor.css
+│   │   │   │   ├── ReceivedMessages.razor
+│   │   │   │   └── RegisteredHooks.razor
+│   │   │   └── LogIn.razor
+│   │   └── Routes.razor
+│   ├── Endpoints
+│   │   ├── AuthenticationEndpoints.cs
+│   │   └── WebhookEndpoints.cs
+│   ├── Extensions
+│   │   └── Extensions.cs
+│   ├── GlobalUsings.cs
+│   ├── Program.cs
+│   ├── Properties
+│   │   └── launchSettings.json
+│   ├── Services
+│   │   ├── HooksRepository.cs
+│   │   ├── WebhookClientOptions.cs
+│   │   ├── WebhookData.cs
+│   │   ├── WebHookReceived.cs
+│   │   ├── WebhookResponse.cs
+│   │   ├── WebHooksClient.cs
+│   │   ├── WebhookSubscriptionRequest.cs
+│   │   └── WebhookType.cs
+│   ├── WebhookClient.csproj
+│   └── wwwroot
+│       └── app.css
+└── Webhooks.API
+    ├── Apis
+    │   └── WebHooksApi.cs
+    ├── appsettings.Development.json
+    ├── appsettings.json
+    ├── Exceptions
+    │   └── WebhooksDomainException.cs
+    ├── Extensions
+    │   ├── Extensions.cs
+    │   └── RouteHandlerBuilderExtensions.cs
+    ├── GlobalUsings.cs
+    ├── Infrastructure
+    │   └── WebhooksContext.cs
+    ├── IntegrationEvents
+    │   ├── OrderStatusChangedToPaidIntegrationEvent.cs
+    │   ├── OrderStatusChangedToPaidIntegrationEventHandler.cs
+    │   ├── OrderStatusChangedToShippedIntegrationEvent.cs
+    │   ├── OrderStatusChangedToShippedIntegrationEventHandler.cs
+    │   ├── OrderStockItem.cs
+    │   ├── ProductPriceChangedIntegrationEvent.cs
+    │   └── ProductPriceChangedIntegrationEventHandler.cs
+    ├── Migrations
+    │   ├── 20230925222606_Initial.cs
+    │   ├── 20230925222606_Initial.Designer.cs
+    │   └── WebhooksContextModelSnapshot.cs
+    ├── Model
+    │   ├── WebhookData.cs
+    │   ├── WebhookSubscription.cs
+    │   ├── WebhookSubscriptionRequest.cs
+    │   └── WebhookType.cs
+    ├── Program.cs
+    ├── Properties
+    │   └── launchSettings.json
+    ├── Services
+    │   ├── GrantUrlTesterService.cs
+    │   ├── IGrantUrlTesterService.cs
+    │   ├── IWebhooksRetriever.cs
+    │   ├── IWebhooksSender.cs
+    │   ├── WebhooksRetriever.cs
+    │   └── WebhooksSender.cs
+    └── Webhooks.API.csproj
+
+241 directories, 987 files

@@ -1,0 +1,38 @@
+# ===== STAGE 1: build & publish =====
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Fichiers globaux (s'ils existent dans ton repo)
+COPY nuget.config ./
+COPY Directory.Packages.props ./
+COPY Directory.Build.props ./
+COPY Directory.Build.targets ./
+COPY global.json ./
+
+# .csproj (service + refs directes + refs transitives)
+COPY src/Basket.API/Basket.API.csproj                         Basket.API/
+COPY src/eShop.ServiceDefaults/eShop.ServiceDefaults.csproj   eShop.ServiceDefaults/
+COPY src/EventBusRabbitMQ/EventBusRabbitMQ.csproj             EventBusRabbitMQ/
+COPY src/EventBus/EventBus.csproj                             EventBus/
+
+# Restore
+RUN dotnet restore Basket.API/Basket.API.csproj
+
+# Code (topologie "frère-à-frère" sous /src)
+COPY src/Basket.API/                 Basket.API/
+COPY src/eShop.ServiceDefaults/      eShop.ServiceDefaults/
+COPY src/EventBusRabbitMQ/           EventBusRabbitMQ/
+COPY src/EventBus/                   EventBus/
+COPY src/Shared/                     Shared/
+
+# Publish
+RUN dotnet publish Basket.API/Basket.API.csproj \
+    -c Release -o /app/publish /p:UseAppHost=false
+
+# ===== STAGE 2: runtime =====
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+ENTRYPOINT ["dotnet","Basket.API.dll"]
