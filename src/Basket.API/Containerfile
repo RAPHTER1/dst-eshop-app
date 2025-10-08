@@ -1,6 +1,11 @@
+LABEL maintainer="raphter"
+LABEL version="1.0"
+LABEL description="Basket.API for eShopOnContainers"
+
 # ===== STAGE 1: build & publish =====
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
+
 
 # Fichiers globaux (s'ils existent dans ton repo)
 COPY nuget.config ./

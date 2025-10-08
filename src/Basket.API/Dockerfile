@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /app
+LABEL maintainer="raphter"
+LABEL version="1.0"
+LABEL description="Basket.API for eShopOnContainers"
 
 COPY . .
 
