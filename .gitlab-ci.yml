@@ -20,7 +20,7 @@ basket_build:
   extends: .build-push-podman
   variables:
     SERVICE: basket-api
-    SERVICE_DIR: src/basket-api            # <-- corrigé (au lieu de src/Catalog.API)
+    SERVICE_DIR: src/Basket.API         # <-- corrigé (au lieu de src/Catalog.API)
     IMAGE_TAG: $CI_COMMIT_SHORT_SHA        # tag immuable principal
   rules:
     # Build sur un tag Git (release)
