@@ -37,7 +37,7 @@ basket_build:
         - src/basket-api/**/*
 
     # Fallback: ne rien faire
-    - when: never
+    - when: on_success
 
 
 # basket_deploy:
