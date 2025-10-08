@@ -1,6 +1,6 @@
 # .gitlab-ci.yml  ── dépôt dst-eshop/eshop-app
 # utilise les templates Kaniko & MR stockés dans dst-eshop/ci-templates
-
+# salut
 include:
   - project: dst-eshop/ci-templates          # dépôt des templates communs
     ref: main                                # branche/tag du dépôt templates
