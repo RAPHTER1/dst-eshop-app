@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
-    <AspnetVersion>9.0.5</AspnetVersion>
+    <AspnetVersion>9.0.9</AspnetVersion>
     <MicrosoftExtensionsVersion>9.0.5</MicrosoftExtensionsVersion>
     <MicrosoftExtensionsAIVersion>9.5.0</MicrosoftExtensionsAIVersion>
     <AspireVersion>9.3.0</AspireVersion>
