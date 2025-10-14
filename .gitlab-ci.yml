@@ -1,103 +1,119 @@
-# .gitlab-ci.yml  ── dépôt dst-eshop/eshop-app
-# utilise les templates Kaniko & MR stockés dans dst-eshop/ci-templates
-# salut
-include:
-  - project: dst-eshop/ci-templates          # dépôt des templates communs
-    ref: main                                # branche/tag du dépôt templates
-    file:
-      - build-push-podman/build-push-podman.yml                # template : build & push image
-      # - bump-infra-mr.yml                    # template : MR vers eshop-infrastructure
-
-stages: [build, deploy]                      # affiché dans l’interface GitLab
-
-# ---------- variables globales ------------------------------------------------
 variables:
-  IMAGE_TAG: $CI_COMMIT_SHORT_SHA            # tag immuable pour l’image (7 car.)
-# ------------------------------------------------------------------------------
+  FF_RETRIEVE_POD_WARNING_EVENTS: "true"
+  FF_PRINT_POD_EVENTS: "true"
+  FF_SCRIPT_SECTIONS: "true"
+  CI_DEBUG_SERVICES: "true"
+  GIT_DEPTH: 5
 
-# ===================== 1. basket-api ==========================================
-basket_build:
-  extends: .build-push-podman
-  variables:
-    SERVICE: basket-api
-    SERVICE_DIR: src/Basket.API         # <-- corrigé (au lieu de src/Catalog.API)
-    IMAGE_TAG: $CI_COMMIT_SHORT_SHA        # tag immuable principal
-  rules:
-    # Build sur un tag Git (release)
-    - if: '$CI_COMMIT_TAG'
-
-    # Build sur dev si le service a changé
-    - if: '$CI_COMMIT_BRANCH == "dev"'
-      changes:
-        - src/basket-api/**/*
-
-    # Build sur main si le service a changé
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      changes:
-        - src/basket-api/**/*
-
-    # Fallback: ne rien faire
-    - when: on_success
+podman-privileged-test:
+  image: quay.io/podman/stable
+  before_script:
+    - podman info
+    - id
+  script:
+    - podman build . -t playground-bis:testing
 
 
-# basket_deploy:
-#   extends: .bump-mr
-#   needs:
-#     - job: basket_build                   # récupère l'artefact dotenv (IMAGE_*)
-#       artifacts: true
+# # .gitlab-ci.yml  ── dépôt dst-eshop/eshop-app
+# # utilise les templates Kaniko & MR stockés dans dst-eshop/ci-templates
+# # salut
+# include:
+#   - project: dst-eshop/ci-templates          # dépôt des templates communs
+#     ref: main                                # branche/tag du dépôt templates
+#     file:
+#       - build-push-podman/build-push-podman.yml                # template : build & push image
+#       # - bump-infra-mr.yml                    # template : MR vers eshop-infrastructure
+
+# stages: [build, deploy]                      # affiché dans l’interface GitLab
+
+# # ---------- variables globales ------------------------------------------------
+# variables:
+#   IMAGE_TAG: $CI_COMMIT_SHORT_SHA            # tag immuable pour l’image (7 car.)
+# # ------------------------------------------------------------------------------
+
+# # ===================== 1. basket-api ==========================================
+# basket_build:
+#   extends: .build-push-podman
 #   variables:
 #     SERVICE: basket-api
-#     SERVICE_DIR: src/basket-api
+#     SERVICE_DIR: src/Basket.API         # <-- corrigé (au lieu de src/Catalog.API)
+#     IMAGE_TAG: $CI_COMMIT_SHORT_SHA        # tag immuable principal
 #   rules:
-#     # 1) Release tag => prod
+#     # Build sur un tag Git (release)
 #     - if: '$CI_COMMIT_TAG'
-#       variables:
-#         OVERRIDE_PATH: values/basket-api/prod.yaml
-#         AUTO_MERGE: "false"
 
-#     # 2) Branche dev : déployer si le service a changé
+#     # Build sur dev si le service a changé
 #     - if: '$CI_COMMIT_BRANCH == "dev"'
 #       changes:
 #         - src/basket-api/**/*
-#       variables:
-#         OVERRIDE_PATH: values/basket-api/dev.yaml
-#         AUTO_MERGE: "true"
 
-#     # 3) Branche main : déployer si le service a changé
+#     # Build sur main si le service a changé
 #     - if: '$CI_COMMIT_BRANCH == "main"'
 #       changes:
 #         - src/basket-api/**/*
-#       variables:
-#         OVERRIDE_PATH: values/basket-api/prod.yaml
-#         AUTO_MERGE: "false"
 
-#     # 4) Sinon, ne pas exécuter
-#     - when: never
+#     # Fallback: ne rien faire
+#     - when: on_success
 
-# ===================== 2.  catalog-api  =======================================
-# catalog_build:
-#   extends: .build-push-kaniko
-#   variables:
-#     SERVICE: catalog-api
-#     SERVICE_DIR: src/Catalog.API
-#   rules:
-#     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
-#       changes: [src/catalog-api/**/*]
 
-# catalog_deploy:
-#   extends: .bump-mr
-#   needs: [catalog_build]
-#   variables:
-#     SERVICE: catalog-api
-#     OVERRIDE_PATH: |
-#       $([[ "$CI_COMMIT_BRANCH" == "dev" ]] \
-#         && echo argocd/values/catalog-api/dev.yaml \
-#         || echo argocd/values/catalog-api/prod.yaml)
-#     AUTO_MERGE: |
-#       $([[ "$CI_COMMIT_BRANCH" == "dev" ]] && echo "true" || echo "false")
-#   rules:
-#     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
-#       changes: [src/catalog-api/**/*]
+# # basket_deploy:
+# #   extends: .bump-mr
+# #   needs:
+# #     - job: basket_build                   # récupère l'artefact dotenv (IMAGE_*)
+# #       artifacts: true
+# #   variables:
+# #     SERVICE: basket-api
+# #     SERVICE_DIR: src/basket-api
+# #   rules:
+# #     # 1) Release tag => prod
+# #     - if: '$CI_COMMIT_TAG'
+# #       variables:
+# #         OVERRIDE_PATH: values/basket-api/prod.yaml
+# #         AUTO_MERGE: "false"
 
-# # -------------- Ajoute un bloc BUILD + DEPLOY similaire pour tout
-# # -------------- autre service présent dans src/<service>/ …
+# #     # 2) Branche dev : déployer si le service a changé
+# #     - if: '$CI_COMMIT_BRANCH == "dev"'
+# #       changes:
+# #         - src/basket-api/**/*
+# #       variables:
+# #         OVERRIDE_PATH: values/basket-api/dev.yaml
+# #         AUTO_MERGE: "true"
+
+# #     # 3) Branche main : déployer si le service a changé
+# #     - if: '$CI_COMMIT_BRANCH == "main"'
+# #       changes:
+# #         - src/basket-api/**/*
+# #       variables:
+# #         OVERRIDE_PATH: values/basket-api/prod.yaml
+# #         AUTO_MERGE: "false"
+
+# #     # 4) Sinon, ne pas exécuter
+# #     - when: never
+
+# # ===================== 2.  catalog-api  =======================================
+# # catalog_build:
+# #   extends: .build-push-kaniko
+# #   variables:
+# #     SERVICE: catalog-api
+# #     SERVICE_DIR: src/Catalog.API
+# #   rules:
+# #     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
+# #       changes: [src/catalog-api/**/*]
+
+# # catalog_deploy:
+# #   extends: .bump-mr
+# #   needs: [catalog_build]
+# #   variables:
+# #     SERVICE: catalog-api
+# #     OVERRIDE_PATH: |
+# #       $([[ "$CI_COMMIT_BRANCH" == "dev" ]] \
+# #         && echo argocd/values/catalog-api/dev.yaml \
+# #         || echo argocd/values/catalog-api/prod.yaml)
+# #     AUTO_MERGE: |
+# #       $([[ "$CI_COMMIT_BRANCH" == "dev" ]] && echo "true" || echo "false")
+# #   rules:
+# #     - if: $CI_COMMIT_BRANCH =~ /^(dev|main)$/ 
+# #       changes: [src/catalog-api/**/*]
+
+# # # -------------- Ajoute un bloc BUILD + DEPLOY similaire pour tout
+# # # -------------- autre service présent dans src/<service>/ …
