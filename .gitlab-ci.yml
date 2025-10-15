@@ -9,7 +9,7 @@ podman-privileged-test:
   image: quay.io/podman/stable
   variables:
     SERVICE: "Basket.API"
-    DOCKERFILE: "src/${SERVICE}/Dockerfile"   # ou "src/${SERVICE}/Dockerfile" / "Containerfile" selon ton repo
+    DOCKERFILE: "src/${SERVICE}/Containerfile"   # ou "src/${SERVICE}/Dockerfile" / "Containerfile" selon ton repo
     CONTEXT: "src/${SERVICE}"
     IMAGE_TAG: "${CI_REGISTRY_IMAGE}/${SERVICE}:${CI_COMMIT_SHORT_SHA}"
   before_script:
